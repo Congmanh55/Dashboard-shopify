@@ -1,0 +1,41 @@
+.sidebar {
+  min-width: 200px;
+  height: 100%;
+  background-color: #ebebeb;
+  padding-top: 70px;
+  position: fixed;
+}
+
+.nav_icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin: 20px 0;
+}
+
+.sidebar nav ul li a {
+  color: black;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar nav ul li a.active {
+  background-color: #3498db;
+  border-radius: 4px;
+}
+
+.sidebar nav ul li.bottom {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
