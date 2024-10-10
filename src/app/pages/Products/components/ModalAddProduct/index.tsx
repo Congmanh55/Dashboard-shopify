@@ -69,8 +69,12 @@ function ModalAddProduct(props: Props) {
     );
 
     const handleClose = useCallback(() => {
+        setProduct("");
+        setRule("");
+        setFiles([]);
+        setErrors({});
         setOpen?.(false);
-    }, [setOpen]);
+    }, [setOpen, setProduct, setRule, setFiles, setErrors]);
 
     const handleSubmit = useCallback(() => {
         const newErrors: { product?: string; rule?: string; image?: string } = {};
@@ -118,12 +122,7 @@ function ModalAddProduct(props: Props) {
                 });
         }
         // Reset trường nhập liệu
-        setProduct("");
-        setRule("");
-        setFiles([]);
-        setErrors({});
         handleClose();
-        setOpen?.(false);
     }, [product, rule, files, handleClose, setOpen]);
 
     const handleProductChange = useCallback((value: string) => {

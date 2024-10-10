@@ -29,7 +29,14 @@ export default function ModalAddRule(props: Props) {
         rules: undefined,
     });
 
-    const handleChange = useCallback(() => setOpenRule?.(false), [setOpenRule]);
+    const handleChange = useCallback(() => {
+        setOpenRule?.(false);
+        setTitleCampaign("")
+        setErrors({});
+        setStartDate("");
+        setEndDate("");
+        setRules([{ buyFrom: "", buyTo: "", discount: "" }]);
+    }, [setOpenRule]);
 
     const handleAddRule = () => {
         setRules([...rules, { buyFrom: "", buyTo: "", discount: "" }]);
@@ -82,7 +89,7 @@ export default function ModalAddRule(props: Props) {
         }
 
         if (!hasError) {
-            console.log({
+            console.log("Add rule", {
                 titleCampaign,
                 startDate,
                 endDate,
@@ -112,66 +119,71 @@ export default function ModalAddRule(props: Props) {
                 >
                     <Modal.Section>
                         <FormLayout>
-                            <TextField
-                                label="Title campaign"
-                                value={titleCampaign}
-                                onChange={setTitleCampaign}
-                                autoComplete="off"
-                                error={errors.titleCampaign}
-                            />
-                            <TextField
-                                label="Start date"
-                                value={startDate}
-                                onChange={setStartDate}
-                                autoComplete="off"
-                                error={errors.startDate}
-                            />
-                            <TextField
-                                label="End date"
-                                value={endDate}
-                                onChange={setEndDate}
-                                autoComplete="off"
-                                error={errors.endDate}
-                            />
-
+                            <FormLayout.Group condensed>
+                                <TextField
+                                    label="Title campaign"
+                                    value={titleCampaign}
+                                    onChange={setTitleCampaign}
+                                    autoComplete="off"
+                                    error={errors.titleCampaign}
+                                />
+                                <TextField
+                                    label="Start date"
+                                    value={startDate}
+                                    onChange={setStartDate}
+                                    autoComplete="off"
+                                    error={errors.startDate}
+                                />
+                                <TextField
+                                    label="End date"
+                                    value={endDate}
+                                    onChange={setEndDate}
+                                    autoComplete="off"
+                                    error={errors.endDate}
+                                />
+                            </FormLayout.Group>
                             {rules.map((rule, index) => (
-                                <div key={index} style={{ display: "flex", gap: "10px" }}>
-                                    <FormLayout.Group condensed>
-                                        <TextField
-                                            label="Buy from"
-                                            value={rule.buyFrom}
-                                            onChange={(value) =>
-                                                handleInputChange(index, "buyFrom", value)
-                                            }
-                                            autoComplete="off"
-                                            error={rule.buyFrom === "" && errors.rules ? true : false}
-                                        />
-                                        <TextField
-                                            label="Buy to"
-                                            value={rule.buyTo}
-                                            onChange={(value) =>
-                                                handleInputChange(index, "buyTo", value)
-                                            }
-                                            autoComplete="off"
-                                            error={rule.buyTo === "" && errors.rules ? true : false}
-                                        />
-                                        <TextField
-                                            label="Discount per item(%)"
-                                            value={rule.discount}
-                                            onChange={(value) =>
-                                                handleInputChange(index, "discount", value)
-                                            }
-                                            autoComplete="off"
-                                            error={
-                                                rule.discount === "" && errors.rules ? true : false
-                                            }
-                                        />
+                                <div key={index} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                                    <div>
+                                        <FormLayout.Group condensed>
+                                            <TextField
+                                                label="Buy from"
+                                                value={rule.buyFrom}
+                                                onChange={(value) =>
+                                                    handleInputChange(index, "buyFrom", value)
+                                                }
+                                                autoComplete="off"
+                                                error={rule.buyFrom === "" && errors.rules ? true : false}
+                                            />
+                                            <TextField
+                                                label="Buy to"
+                                                value={rule.buyTo}
+                                                onChange={(value) =>
+                                                    handleInputChange(index, "buyTo", value)
+                                                }
+                                                autoComplete="off"
+                                                error={rule.buyTo === "" && errors.rules ? true : false}
+                                            />
+                                            <TextField
+                                                label="Discount per item(%)"
+                                                value={rule.discount}
+                                                onChange={(value) =>
+                                                    handleInputChange(index, "discount", value)
+                                                }
+                                                autoComplete="off"
+                                                error={
+                                                    rule.discount === "" && errors.rules ? true : false
+                                                }
+                                            />
+                                        </FormLayout.Group>
+                                    </div>
+                                    <div style={{ paddingTop: "25px" }}>
                                         <Button
                                             icon={DeleteIcon}
                                             onClick={() => handleDeleteRule(index)}
                                             variant="secondary"
                                         />
-                                    </FormLayout.Group>
+                                    </div>
                                 </div>
                             ))}
 
@@ -184,6 +196,7 @@ export default function ModalAddRule(props: Props) {
                                 </div>
                             )}
                         </FormLayout>
+
                     </Modal.Section>
                 </Modal>
             </Frame>
